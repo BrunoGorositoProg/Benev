@@ -4,15 +4,31 @@ class CartDrawer {
 
         return `
 
-<div class="cart-overlay" id="cart-overlay"></div>
+<div id="cart-overlay" class="cart-overlay"></div>
 
-<aside class="cart-drawer" id="cart-drawer">
+<aside id="cart-drawer-panel" class="cart-drawer">
 
     <div class="cart-header">
 
-        <h2>Shopping Bag</h2>
+        <div>
 
-        <button id="close-cart">
+            <span class="cart-label">
+
+                SHOPPING BAG
+
+            </span>
+
+            <h2>
+
+                Your Bag
+
+            </h2>
+
+        </div>
+
+        <button
+            id="close-cart"
+            class="close-cart">
 
             <i class="fa-solid fa-xmark"></i>
 
@@ -20,11 +36,25 @@ class CartDrawer {
 
     </div>
 
-    <div class="cart-body" id="cart-items">
+    <div
+        id="cart-items"
+        class="cart-items">
 
         <div class="cart-empty">
 
-            <p>Your bag is empty.</p>
+            <i class="fa-solid fa-bag-shopping"></i>
+
+            <h3>
+
+                Your bag is empty
+
+            </h3>
+
+            <p>
+
+                Add products to start your order.
+
+            </p>
 
         </div>
 
@@ -34,13 +64,23 @@ class CartDrawer {
 
         <div class="cart-total">
 
-            <span>Subtotal</span>
+            <span>
 
-            <strong id="cart-total">$0</strong>
+                Total
+
+            </span>
+
+            <strong id="cart-total">
+
+                $0
+
+            </strong>
 
         </div>
 
-        <button id="checkout-btn">
+        <button
+            id="checkout-btn"
+            class="btn-primary cart-checkout">
 
             Request Order
 
@@ -50,16 +90,10 @@ class CartDrawer {
 
 </aside>
 
-`;
+        `;
 
     }
 
 }
 
-document.body.insertAdjacentHTML(
-
-    "beforeend",
-
-    new CartDrawer().render()
-
-);
+document.getElementById("cart-drawer").innerHTML = new CartDrawer().render();

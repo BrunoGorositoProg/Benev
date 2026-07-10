@@ -6,39 +6,59 @@ class Navbar {
 
 <header class="navbar">
 
-    <div class="navbar-container">
+    <div class="container navbar-container">
 
-        <nav class="navbar-left">
+        <a href="index.html" class="nav-logo">
 
-            <a href="shop.html">Collection</a>
-
-            <a href="about.html">About</a>
-
-        </nav>
-
-        <a href="index.html" class="navbar-logo">
-
-            <img src="assets/img/logo01.png" alt="Benev">
+            <img
+                src="assets/img/logo01.png"
+                alt="Benev">
 
         </a>
 
-        <div class="navbar-right">
+        <nav class="nav-menu">
 
-            <button class="icon-btn">
+            <a href="index.html">
 
-                <i class="fa-solid fa-magnifying-glass"></i>
+                Home
 
-            </button>
+            </a>
 
-            <button class="icon-btn cart-btn" id="cart-btn">
+            <a href="shop.html">
+
+                Shop
+
+            </a>
+
+            <a href="about.html">
+
+                About
+
+            </a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <button
+                id="cart-button"
+                class="nav-icon"
+                aria-label="Carrito">
 
                 <i class="fa-solid fa-bag-shopping"></i>
 
-                <span id="cart-count">0</span>
+                <span id="cart-count">
+
+                    0
+
+                </span>
 
             </button>
 
-            <button class="menu-btn">
+            <button
+                id="menu-button"
+                class="nav-icon mobile-only"
+                aria-label="Menú">
 
                 <i class="fa-solid fa-bars"></i>
 
@@ -50,10 +70,68 @@ class Navbar {
 
 </header>
 
-`;
+<div id="mobile-menu" class="mobile-menu">
+
+    <a href="index.html">
+
+        Home
+
+    </a>
+
+    <a href="shop.html">
+
+        Shop
+
+    </a>
+
+    <a href="about.html">
+
+        About
+
+    </a>
+
+</div>
+
+<div id="cart-drawer"></div>
+
+        `;
 
     }
 
 }
 
 document.getElementById("navbar").innerHTML = new Navbar().render();
+
+/*=========================
+MENU MOBILE
+=========================*/
+
+const menuButton = document.getElementById("menu-button");
+
+const mobileMenu = document.getElementById("mobile-menu");
+
+menuButton?.addEventListener("click",()=>{
+
+    mobileMenu.classList.toggle("active");
+
+});
+
+/*=========================
+SCROLL
+=========================*/
+
+const navbar = document.querySelector(".navbar");
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY>40){
+
+        navbar.classList.add("scrolled");
+
+    }else{
+
+        navbar.classList.remove("scrolled");
+
+    }
+
+});

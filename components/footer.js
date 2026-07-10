@@ -2,6 +2,8 @@ class Footer {
 
     render() {
 
+        const year = new Date().getFullYear();
+
         return `
 
 <footer class="footer">
@@ -10,12 +12,13 @@ class Footer {
 
         <div class="footer-brand">
 
-            <img src="assets/img/logo01.png" alt="Benev">
+            <img
+                src="assets/img/logo01.png"
+                alt="Benev">
 
             <p>
 
-                Premium oversized essentials designed
-                to last.
+                Built Different.
 
             </p>
 
@@ -23,25 +26,43 @@ class Footer {
 
         <div class="footer-links">
 
-            <h4>Navigation</h4>
+            <div>
 
-            <a href="index.html">Home</a>
+                <h4>
 
-            <a href="shop.html">Collection</a>
+                    Navigation
 
-            <a href="about.html">About</a>
+                </h4>
 
-        </div>
+                <a href="index.html">Home</a>
 
-        <div class="footer-links">
+                <a href="shop.html">Shop</a>
 
-            <h4>Social</h4>
+                <a href="about.html">About</a>
 
-            <a href="#">Instagram</a>
+            </div>
 
-            <a href="#">TikTok</a>
+            <div>
 
-            <a href="#">WhatsApp</a>
+                <h4>
+
+                    Contact
+
+                </h4>
+
+                <a href="https://instagram.com/benev.oficial">
+
+                    Instagram
+
+                </a>
+
+                <a href="https://wa.me/5493492XXXXXXXX">
+
+                    WhatsApp
+
+                </a>
+
+            </div>
 
         </div>
 
@@ -49,13 +70,13 @@ class Footer {
 
     <div class="footer-bottom">
 
-        © 2026 Benev.
+        © ${year} Benev — Built Different.
 
     </div>
 
 </footer>
 
-`;
+        `;
 
     }
 

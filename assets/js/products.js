@@ -1,118 +1,28 @@
 let productos = [];
 let productosFiltrados = [];
-
+let productoActual = null;
+let varianteSeleccionada = null;
 /*==================================
-CARGAR PRODUCTOS
+CARGAR TODOS LOS PRODUCTOS
 ==================================*/
 
-async function cargarProducto() {
+async function cargarProductos() {
 
-    const container = document.getElementById("product-page");
+    try {
 
-    if (!container) return;
+        productos = await DB.getProductos(id);
+        productoActual = producto;
+        productosFiltrados = [...productos];
 
-    const params = new URLSearchParams(window.location.search);
+        renderHomeProducts();
 
-    const id = Number(params.get("id"));
+        renderShopProducts();
 
-    if (!id) return;
+    } catch (error) {
 
-    const producto = await DB.getProducto(id);
-
-    if (!producto) {
-
-        container.innerHTML = `
-            <h2>Producto no encontrado</h2>
-        `;
-
-        return;
+        console.error(error);
 
     }
-
-    container.innerHTML = `
-
-    <section class="product-view">
-
-        <div class="product-gallery">
-
-            <img
-                src="${producto.imagen_principal}"
-                alt="${producto.nombre}"
-            >
-
-        </div>
-
-        <div class="product-information">
-
-            <span class="product-category">
-
-                ${producto.categoria || "COLLECTION"}
-
-            </span>
-
-            <h1>
-
-                ${producto.nombre}
-
-            </h1>
-
-            <p class="product-price">
-
-                $${Number(producto.precio).toLocaleString("es-AR")}
-
-            </p>
-
-            <p class="product-description">
-
-                ${producto.descripcion || ""}
-
-            </p>
-
-            <div class="size-selector">
-
-                <button class="size-btn">XS</button>
-
-                <button class="size-btn">S</button>
-
-                <button class="size-btn">M</button>
-
-                <button class="size-btn">L</button>
-
-                <button class="size-btn">XL</button>
-
-            </div>
-
-            <div class="product-actions">
-
-                <button class="btn-primary">
-
-                    Add To Bag
-
-                </button>
-
-            </div>
-
-            <ul class="product-details">
-
-                <li>
-                    ${producto.gramaje || ""}
-                </li>
-
-                <li>
-                    ${producto.composicion || ""}
-                </li>
-
-                <li>
-                    ${producto.fit || ""}
-                </li>
-
-            </ul>
-
-        </div>
-
-    </section>
-
-    `;
 
 }
 
@@ -179,13 +89,7 @@ async function cargarProducto() {
 
     if (!id) return;
 
-    if (productos.length === 0) {
-
-        productos = await DB.getProductos();
-
-    }
-
-    const producto = productos.find(p => p.id === id);
+    const producto = await DB.getProducto(id);
 
     if (!producto) {
 
@@ -195,13 +99,31 @@ async function cargarProducto() {
 
     }
 
+    const imagenes = await DB.getImagenes(id);
+
+    const variantes = await DB.getVariantes(id);
+
     container.innerHTML = `
 
 <section class="product-view">
 
     <div class="product-gallery">
 
-        <img src="${producto.imagen}" alt="${producto.nombre}">
+        <div
+            class="gallery-thumbnails"
+            id="gallery-thumbnails">
+
+        </div>
+
+        <div class="gallery-main">
+
+            <img
+                id="main-product-image"
+                src="${producto.imagen_principal}"
+                alt="${producto.nombre}"
+            >
+
+        </div>
 
     </div>
 
@@ -209,7 +131,7 @@ async function cargarProducto() {
 
         <span class="product-category">
 
-            PREMIUM COLLECTION
+            ${producto.categoria || "COLLECTION"}
 
         </span>
 
@@ -231,15 +153,33 @@ async function cargarProducto() {
 
         </p>
 
+        <div
+            class="size-selector"
+            id="size-selector">
+
+        </div>
+
         <div class="product-actions">
 
-            <button class="btn-primary">
+            <button
+                class="btn-primary"
+                id="add-cart-btn">
 
-                Add to Bag
+                Add To Bag
 
             </button>
 
         </div>
+
+        <ul class="product-details">
+
+            <li>${producto.gramaje || ""}</li>
+
+            <li>${producto.composicion || ""}</li>
+
+            <li>${producto.fit || ""}</li>
+
+        </ul>
 
     </div>
 
@@ -247,4 +187,141 @@ async function cargarProducto() {
 
 `;
 
+    /*==========================
+    GALERÍA
+    ==========================*/
+
+    const thumbs = document.getElementById("gallery-thumbnails");
+
+    if (imagenes.length > 0) {
+
+        imagenes.forEach(img => {
+
+            thumbs.innerHTML += `
+
+                <div class="gallery-thumb">
+
+                    <img
+                        src="${img.imagen}"
+                        onclick="changeImage('${img.imagen}')"
+                    >
+
+                </div>
+
+            `;
+
+        });
+
+    } else {
+
+        thumbs.innerHTML = `
+
+            <div class="gallery-thumb">
+
+                <img
+                    src="${producto.imagen_principal}"
+                    onclick="changeImage('${producto.imagen_principal}')"
+                >
+
+            </div>
+
+        `;
+
+    }
+
+    /*==========================
+    TALLES
+    ==========================*/
+
+    const sizeContainer = document.getElementById("size-selector");
+
+    variantes
+    .filter(variant => variant.stock > 0)
+    .forEach(variant => {
+
+        sizeContainer.innerHTML += `
+
+            <button
+                class="size-btn"
+                data-id="${variant.id}"
+                data-talle="${variant.talle}">
+
+                ${variant.talle}
+
+            </button>
+
+        `;
+
+    });
+
+document.querySelectorAll(".size-btn").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        document
+            .querySelectorAll(".size-btn")
+            .forEach(btn => btn.classList.remove("active"));
+
+        button.classList.add("active");
+
+        varianteSeleccionada = {
+
+            id: Number(button.dataset.id),
+
+            talle: button.dataset.talle
+
+        };
+
+    });
+
+});
+
+document
+    .getElementById("add-cart-btn")
+    .addEventListener("click", () => {
+
+        if (!varianteSeleccionada) {
+
+            alert("Seleccioná un talle.");
+
+            return;
+
+        }
+
+        cart.add(
+
+            productoActual,
+
+            varianteSeleccionada
+
+        );
+
+    });
+
 }
+
+/*==================================
+CAMBIAR IMAGEN
+==================================*/
+
+function changeImage(url){
+
+    const image = document.getElementById("main-product-image");
+
+    image.style.opacity = 0;
+
+    setTimeout(()=>{
+
+        image.src = url;
+
+        image.onload = ()=>{
+
+            image.style.opacity = 1;
+
+        };
+
+    },150);
+
+}
+
+window.changeImage = changeImage;

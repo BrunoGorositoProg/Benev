@@ -5,21 +5,15 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>Benev</title>
+    <title>Benev | Built Different</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="icon" href="assets/img/favicon.png">
 
     <!-- CSS -->
+
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/variables.css">
     <link rel="stylesheet" href="assets/css/global.css">
@@ -27,87 +21,275 @@
     <link rel="stylesheet" href="assets/css/cart.css">
     <link rel="stylesheet" href="assets/css/animations.css">
 
+    <!-- ICONS -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
 
 <body data-page="home">
 
-    <!-- Navbar -->
-    <div id="navbar"></div>
+<div id="navbar"></div>
 
-    <!-- Main -->
-    <main>
-        <section class="hero">
+<main>
+<main>
 
-            <div class="hero-overlay"></div>
+    <!-- HERO -->
 
-            <img src="assets/img/hero01.jpg"
-                class="hero-image"
-                alt="Benev">
+    <section class="hero">
 
-            <div class="hero-content">
+        <div class="container hero-container">
 
-                <p class="hero-subtitle">
-                    PREMIUM OVERSIZED ESSENTIALS
-                </p>
+            <div class="hero-content fade-up">
+
+                <span class="hero-label">
+
+                    BUILT DIFFERENT
+
+                </span>
 
                 <h1>
-                    B E N E V
+
+                    Premium
+                    Oversized
+                    Essentials
+
                 </h1>
 
-                <p class="hero-description">
-                    Designed to last.
+                <p>
+
+                    Designed for everyday wear.
+                    Premium heavyweight fabrics,
+                    timeless silhouettes and
+                    uncompromising quality.
+
                 </p>
 
-                <a href="shop.html" class="btn">
-                    Explore Collection
-                </a>
+                <div class="hero-buttons">
 
-            </div>
+                    <a
+                        href="shop.html"
+                        class="btn-primary">
 
-        </section>
-        <!-- Featured Collection -->
+                        Shop Collection
 
-        <section class="featured">
+                    </a>
 
-            <div class="container">
+                    <a
+                        href="#featured"
+                        class="btn-outline">
 
-                <div class="section-title">
+                        Explore
 
-                    <p>NEW COLLECTION</p>
-
-                    <h2>Built for everyday.</h2>
-
-                </div>
-
-                <div class="featured-grid" id="featured-products">
-
-                    <!-- JS -->
+                    </a>
 
                 </div>
 
             </div>
 
-        </section>
-    </main>
+            <div class="hero-image zoom fade-up">
 
-    <!-- Footer -->
-    <div id="footer"></div>
+                <img
+                    src="assets/img/hero01.jpg"
+                    alt="Benev">
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+            </div>
 
-    <!-- Components -->
-    <script src="components/navbar.js"></script>
-    <script src="components/footer.js"></script>
+        </div>
 
-    <!-- JS -->
-    <script src="assets/js/supabase.js"></script>
-    <script src="components/card.js"></script>
-    <script src="assets/js/product.js"></script>
-    <script src="assets/js/cart.js"></script>
-    <script src="assets/js/animation.js"></script>
-    <script src="components/cartDrawer.js"></script>
-    <script src="assets/js/app.js"></script>
+    </section>
+
+    <!-- FEATURED -->
+
+    <section
+        id="featured"
+        class="featured">
+
+        <div class="container">
+
+            <div class="section-title fade-up">
+
+                <span>
+
+                    LATEST DROP
+
+                </span>
+
+                <h2>
+
+                    Featured Pieces
+
+                </h2>
+
+            </div>
+
+            <div
+                id="featured-products"
+                class="products-grid">
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- QUALITY -->
+
+    <section class="quality">
+
+        <div class="container">
+
+            <div class="quality-grid">
+
+                <div class="fade-up">
+
+                    <h3>
+
+                        420GSM
+
+                    </h3>
+
+                    <p>
+
+                        Heavyweight fabrics developed
+                        for structure and durability.
+
+                    </p>
+
+                </div>
+
+                <div class="fade-up">
+
+                    <h3>
+
+                        Premium
+
+                    </h3>
+
+                    <p>
+
+                        High-quality materials,
+                        details and finishes.
+
+                    </p>
+
+                </div>
+
+                <div class="fade-up">
+
+                    <h3>
+
+                        Oversized
+
+                    </h3>
+
+                    <p>
+
+                        Relaxed silhouettes designed
+                        for comfort.
+
+                    </p>
+
+                </div>
+
+                <div class="fade-up">
+
+                    <h3>
+
+                        Benev
+
+                    </h3>
+
+                    <p>
+
+                        Built Different.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- LOOKBOOK -->
+
+    <section class="lookbook">
+
+        <div class="lookbook-track">
+
+            <img src="assets/img/look01.jpg">
+
+            <img src="assets/img/look02.jpg">
+
+            <img src="assets/img/look03.jpg">
+
+            <img src="assets/img/look04.jpg">
+
+            <img src="assets/img/look05.jpg">
+
+        </div>
+
+    </section>
+
+    <!-- MANIFESTO -->
+
+    <section class="newsletter">
+
+        <div class="container">
+
+            <span>
+
+                BENEV
+
+            </span>
+
+            <h2>
+
+                Built Different.
+
+            </h2>
+
+            <p>
+
+                Clothing designed to last.
+                No trends. No shortcuts.
+                Only timeless premium essentials.
+
+            </p>
+
+            <a
+                href="shop.html"
+                class="btn-primary">
+
+                Discover Collection
+
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+</main>
+
+<div id="footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script src="components/navbar.js"></script>
+<script src="components/footer.js"></script>
+<script src="components/card.js"></script>
+<script src="components/cartDrawer.js"></script>
+
+<script src="assets/js/supabase.js"></script>
+<script src="assets/js/product.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/animation.js"></script>
+<script src="assets/js/app.js"></script>
 
 </body>
 

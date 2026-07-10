@@ -1,82 +1,70 @@
-class App {
+/*==================================================
+BENEV
+APP
+==================================================*/
 
-    async init() {
+document.addEventListener("DOMContentLoaded", async () => {
 
-        console.log("Benev initialized");
+    try {
 
-        this.loadPage();
+        await iniciarAplicacion();
 
-    }
+    } catch (error) {
 
-    loadPage() {
-
-        const page = document.body.dataset.page;
-
-        switch (page) {
-
-            case "home":
-                this.initHome();
-                break;
-
-            case "shop":
-                this.initShop();
-                break;
-
-            case "product":
-                this.initProduct();
-                break;
-
-            case "cart":
-                this.initCartPage();
-                break;
-
-            case "about":
-                this.initAbout();
-                break;
-
-        }
+        console.error(error);
 
     }
 
-    initHome() {
+});
 
-        if (typeof cargarProductos === "function") {
+async function iniciarAplicacion() {
 
-            cargarProductos();
+    iniciarComponentes();
 
-        }
+    iniciarAnimaciones();
 
-    }
+    await cargarDatos();
 
-    initShop() {
+}
 
-        if (typeof cargarProductos === "function") {
+function iniciarComponentes() {
 
-            cargarProductos();
+    if (typeof Navbar !== "undefined") {
 
-        }
-
-    }
-
-    initProduct() {
-        cargarProducto();
+        new Navbar();
 
     }
 
-    initCartPage() {
+    if (typeof Footer !== "undefined") {
 
-    }
-
-    initAbout() {
+        new Footer();
 
     }
 
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+async function cargarDatos() {
 
-    const app = new App();
+    if (typeof cargarProductos === "function") {
 
-    app.init();
+        await cargarProductos();
 
-});
+    }
+
+    if (typeof cargarProducto === "function") {
+
+        await cargarProducto();
+
+    }
+
+}
+
+function iniciarAnimaciones() {
+
+    if (typeof Animation !== "undefined") {
+
+        Animation.init();
+
+    }
+
+}

@@ -1,8 +1,8 @@
-class Card {
+class Card{
 
-    constructor(product){
+    constructor(producto){
 
-        this.product = product;
+        this.producto=producto;
 
     }
 
@@ -10,29 +10,52 @@ class Card {
 
         return `
 
-<article class="product-card">
+<article class="product-card fade-up">
 
-    <a href="product.html?id=${this.product.id}">
+<a href="product.html?id=${this.producto.id}">
 
-        <div class="product-image">
+<div class="product-image">
 
-            <img
-                src="${this.product.imagen}"
-                alt="${this.product.nombre}"
-                loading="lazy"
-            >
+<img
+src="${this.producto.imagen_principal}"
+alt="${this.producto.nombre}"
+loading="lazy">
 
-        </div>
+${this.producto.nuevo?`
 
-        <div class="product-information">
+<span class="product-tag">
 
-            <h3>${this.product.nombre}</h3>
+NEW
 
-            <span>$${Number(this.product.precio).toLocaleString("es-AR")}</span>
+</span>
 
-        </div>
+`:""}
 
-    </a>
+</div>
+
+<div class="product-info">
+
+<span>
+
+${this.producto.categoria}
+
+</span>
+
+<h3>
+
+${this.producto.nombre}
+
+</h3>
+
+<p>
+
+$${Number(this.producto.precio).toLocaleString("es-AR")}
+
+</p>
+
+</div>
+
+</a>
 
 </article>
 
@@ -41,3 +64,5 @@ class Card {
     }
 
 }
+
+window.Card=Card;
