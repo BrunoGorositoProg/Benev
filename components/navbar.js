@@ -11,7 +11,7 @@ class Navbar {
         <a href="index.html" class="nav-logo">
 
             <img
-                src="assets/img/logo01.png"
+                src="assets/img/BenevSinFondo.png"
                 alt="Benev">
 
         </a>

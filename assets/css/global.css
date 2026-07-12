@@ -121,7 +121,7 @@ NAVBAR
 
 .nav-logo img{
 
-    height:34px;
+    height:50px;
 
 }
 
@@ -357,8 +357,7 @@ FOOTER
 
 .footer-brand img{
 
-    width:170px;
-
+    width:auto;
     margin-bottom:20px;
 
 }
@@ -455,7 +454,7 @@ FOOTER
 
 .footer-brand img{
 
-    height:36px;
+    height:50px;
 
     margin-bottom:20px;
 

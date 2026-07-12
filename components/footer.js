@@ -13,7 +13,7 @@ class Footer {
         <div class="footer-brand">
 
             <img
-                src="assets/img/logo01.png"
+                src="assets/img/BenevSinFondoBlanco.png"
                 alt="Benev">
 
             <p>

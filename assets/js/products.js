@@ -17,6 +17,8 @@ async function cargarProductos() {
 
         renderShopProducts();
 
+        iniciarOrdenamiento();
+
     } catch (error) {
 
         console.error("Error cargando productos:", error);
@@ -82,6 +84,11 @@ function renderShopProducts() {
         container.innerHTML += card.render();
 
     });
+    if (typeof Animation !== "undefined") {
+
+    Animation.fadeElements();
+
+}
 
     const contador = document.getElementById("product-count");
 
@@ -96,6 +103,41 @@ function renderShopProducts() {
 /*==================================
 PRODUCT
 ==================================*/
+function iniciarOrdenamiento(){
+
+    const select = document.getElementById("sort-products");
+
+    if(!select) return;
+
+    select.addEventListener("change",()=>{
+
+        switch(select.value){
+
+            case "Newest":
+
+                productosFiltrados.sort((a,b)=>b.id-a.id);
+
+            break;
+
+            case "Price ↑":
+
+                productosFiltrados.sort((a,b)=>a.precio-b.precio);
+
+            break;
+
+            case "Price ↓":
+
+                productosFiltrados.sort((a,b)=>b.precio-a.precio);
+
+            break;
+
+        }
+
+        renderShopProducts();
+
+    });
+
+}
 
 async function cargarProducto() {
 
