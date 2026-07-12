@@ -66,5 +66,8 @@ function iniciarAnimaciones() {
         Animation.init();
 
     }
+    if (typeof Lookbook !== "undefined") {
+        Lookbook.init();
+    }
 
 }

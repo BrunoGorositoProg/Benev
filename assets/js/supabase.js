@@ -1,8 +1,8 @@
-const SUPABASE_URL = "https://supabase.com/dashboard/project/mojwlddkxztnkbntpulh";
+const SUPABASE_URL = "https://mojwlddkxztnkbntpulh.supabase.co";
 
 const SUPABASE_KEY = "sb_publishable_-jVVmWkAH8ragZhJoU5eeA_SS6L_h19";
 
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
@@ -15,7 +15,7 @@ const DB = {
 
     async getProductos(){
 
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from("productos")
             .select("*")
             .eq("activo", true)
@@ -35,7 +35,7 @@ const DB = {
 
     async getProducto(id){
 
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
 
             .from("productos")
 
@@ -63,7 +63,7 @@ const DB = {
 
     async getImagenes(productoId){
 
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
 
             .from("imagenes_producto")
 
@@ -91,7 +91,7 @@ const DB = {
 
     async getVariantes(productoId){
 
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
 
             .from("variantes")
 

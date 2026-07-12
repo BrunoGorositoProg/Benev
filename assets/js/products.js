@@ -1,7 +1,6 @@
 let productos = [];
 let productosFiltrados = [];
-let productoActual = null;
-let varianteSeleccionada = null;
+
 /*==================================
 CARGAR TODOS LOS PRODUCTOS
 ==================================*/
@@ -10,8 +9,8 @@ async function cargarProductos() {
 
     try {
 
-        productos = await DB.getProductos(id);
-        productoActual = producto;
+        productos = await DB.getProductos();
+
         productosFiltrados = [...productos];
 
         renderHomeProducts();
@@ -20,7 +19,7 @@ async function cargarProductos() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Error cargando productos:", error);
 
     }
 
@@ -38,16 +37,17 @@ function renderHomeProducts() {
 
     container.innerHTML = "";
 
-    productos
+    const destacados = productos
         .filter(producto => producto.destacado)
-        .slice(0, 3)
-        .forEach(producto => {
+        .slice(0, 4);
 
-            const card = new Card(producto);
+    destacados.forEach(producto => {
 
-            container.innerHTML += card.render();
+        const card = new Card(producto);
 
-        });
+        container.innerHTML += card.render();
+
+    });
 
 }
 
@@ -63,6 +63,18 @@ function renderShopProducts() {
 
     container.innerHTML = "";
 
+    if (productosFiltrados.length === 0) {
+
+        container.innerHTML = `
+            <div class="shop-empty">
+                <h2>No products found.</h2>
+            </div>
+        `;
+
+        return;
+
+    }
+
     productosFiltrados.forEach(producto => {
 
         const card = new Card(producto);
@@ -70,6 +82,14 @@ function renderShopProducts() {
         container.innerHTML += card.render();
 
     });
+
+    const contador = document.getElementById("product-count");
+
+    if (contador) {
+
+        contador.textContent = productosFiltrados.length;
+
+    }
 
 }
 
@@ -120,8 +140,7 @@ async function cargarProducto() {
             <img
                 id="main-product-image"
                 src="${producto.imagen_principal}"
-                alt="${producto.nombre}"
-            >
+                alt="${producto.nombre}">
 
         </div>
 
@@ -187,10 +206,6 @@ async function cargarProducto() {
 
 `;
 
-    /*==========================
-    GALERÍA
-    ==========================*/
-
     const thumbs = document.getElementById("gallery-thumbnails");
 
     if (imagenes.length > 0) {
@@ -198,16 +213,13 @@ async function cargarProducto() {
         imagenes.forEach(img => {
 
             thumbs.innerHTML += `
-
                 <div class="gallery-thumb">
 
                     <img
                         src="${img.imagen}"
-                        onclick="changeImage('${img.imagen}')"
-                    >
+                        onclick="changeImage('${img.imagen}')">
 
                 </div>
-
             `;
 
         });
@@ -215,86 +227,30 @@ async function cargarProducto() {
     } else {
 
         thumbs.innerHTML = `
-
             <div class="gallery-thumb">
 
                 <img
                     src="${producto.imagen_principal}"
-                    onclick="changeImage('${producto.imagen_principal}')"
-                >
+                    onclick="changeImage('${producto.imagen_principal}')">
 
             </div>
-
         `;
 
     }
 
-    /*==========================
-    TALLES
-    ==========================*/
-
     const sizeContainer = document.getElementById("size-selector");
 
-    variantes
-    .filter(variant => variant.stock > 0)
-    .forEach(variant => {
+    variantes.forEach(variante => {
 
         sizeContainer.innerHTML += `
-
             <button
                 class="size-btn"
-                data-id="${variant.id}"
-                data-talle="${variant.talle}">
+                data-id="${variante.id}">
 
-                ${variant.talle}
+                ${variante.talle}
 
             </button>
-
         `;
-
-    });
-
-document.querySelectorAll(".size-btn").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        document
-            .querySelectorAll(".size-btn")
-            .forEach(btn => btn.classList.remove("active"));
-
-        button.classList.add("active");
-
-        varianteSeleccionada = {
-
-            id: Number(button.dataset.id),
-
-            talle: button.dataset.talle
-
-        };
-
-    });
-
-});
-
-document
-    .getElementById("add-cart-btn")
-    .addEventListener("click", () => {
-
-        if (!varianteSeleccionada) {
-
-            alert("Seleccioná un talle.");
-
-            return;
-
-        }
-
-        cart.add(
-
-            productoActual,
-
-            varianteSeleccionada
-
-        );
 
     });
 
@@ -304,23 +260,25 @@ document
 CAMBIAR IMAGEN
 ==================================*/
 
-function changeImage(url){
+function changeImage(url) {
 
     const image = document.getElementById("main-product-image");
 
+    if (!image) return;
+
     image.style.opacity = 0;
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         image.src = url;
 
-        image.onload = ()=>{
+        image.onload = () => {
 
             image.style.opacity = 1;
 
         };
 
-    },150);
+    }, 150);
 
 }
 
