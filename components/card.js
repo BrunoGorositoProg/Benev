@@ -1,61 +1,72 @@
-class Card{
+class Card {
 
-    constructor(producto){
+    constructor(producto) {
 
-        this.producto=producto;
+        this.producto = producto;
 
     }
 
-    render(){
+    render() {
+
+        const segundaImagen =
+            this.producto.imagen2 ||
+            this.producto.imagen_principal;
 
         return `
 
 <article class="product-card fade-up">
 
-<a href="product.html?id=${this.producto.id}">
+    <a href="product.html?id=${this.producto.id}">
 
-<div class="product-image">
+        <div class="product-image">
 
-<img
-src="${this.producto.imagen_principal}"
-alt="${this.producto.nombre}"
-loading="lazy">
+            <img
+                class="img-front"
+                src="${this.producto.imagen_principal}"
+                alt="${this.producto.nombre}"
+                loading="lazy">
 
-${this.producto.nuevo?`
+            <img
+                class="img-back"
+                src="${segundaImagen}"
+                alt="${this.producto.nombre}"
+                loading="lazy">
 
-<span class="product-tag">
+            ${this.producto.nuevo ? `
 
-NEW
+                <span class="product-tag">
 
-</span>
+                    NEW
 
-`:""}
+                </span>
 
-</div>
+            ` : ""}
 
-<div class="product-info">
+        </div>
 
-<span>
+        <div class="product-info">
 
-${this.producto.categoria}
+            <h3>
 
-</span>
+                ${this.producto.nombre}
 
-<h3>
+            </h3>
 
-${this.producto.nombre}
+            <p class="product-price">
 
-</h3>
+                $${Number(this.producto.precio).toLocaleString("es-AR")}
 
-<p>
+            </p>
 
-$${Number(this.producto.precio).toLocaleString("es-AR")}
+            <span class="product-fit">
 
-</p>
+                ${this.producto.fit || "Oversized Fit"}
 
-</div>
+            </span>
 
-</a>
+        </div>
+
+    </a>
 
 </article>
 
@@ -65,4 +76,4 @@ $${Number(this.producto.precio).toLocaleString("es-AR")}
 
 }
 
-window.Card=Card;
+window.Card = Card;

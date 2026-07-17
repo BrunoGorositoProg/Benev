@@ -155,15 +155,47 @@ async function cargarProducto() {
 
     if (!producto) {
 
-        container.innerHTML = "<h2>Producto no encontrado.</h2>";
+        container.innerHTML = `
+            <h2>Producto no encontrado.</h2>
+        `;
 
         return;
 
     }
 
-    const imagenes = await DB.getImagenes(id);
-
     const variantes = await DB.getVariantes(id);
+
+    let imagenes = await DB.getImagenes(id);
+
+    /*==================================
+    IMÁGENES
+    ==================================*/
+
+    if (!imagenes || imagenes.length === 0) {
+
+        imagenes = [];
+
+        [
+            producto.imagen_principal,
+            producto.imagen2,
+            producto.imagen3,
+            producto.imagen4
+
+        ].forEach(imagen => {
+
+            if (imagen) {
+
+                imagenes.push({
+
+                    imagen
+
+                });
+
+            }
+
+        });
+
+    }
 
     container.innerHTML = `
 
@@ -181,7 +213,7 @@ async function cargarProducto() {
 
             <img
                 id="main-product-image"
-                src="${producto.imagen_principal}"
+                src="${imagenes[0].imagen}"
                 alt="${producto.nombre}">
 
         </div>
@@ -192,7 +224,7 @@ async function cargarProducto() {
 
         <span class="product-category">
 
-            ${producto.categoria || "COLLECTION"}
+            ${producto.categoria}
 
         </span>
 
@@ -220,25 +252,33 @@ async function cargarProducto() {
 
         </div>
 
-        <div class="product-actions">
+        <button
+            class="btn-primary"
+            id="add-cart-btn">
 
-            <button
-                class="btn-primary"
-                id="add-cart-btn">
+            Add To Bag
 
-                Add To Bag
-
-            </button>
-
-        </div>
+        </button>
 
         <ul class="product-details">
 
-            <li>${producto.gramaje || ""}</li>
+            <li>
 
-            <li>${producto.composicion || ""}</li>
+                ${producto.fit}
 
-            <li>${producto.fit || ""}</li>
+            </li>
+
+            <li>
+
+                ${producto.gramaje}
+
+            </li>
+
+            <li>
+
+                ${producto.composicion}
+
+            </li>
 
         </ul>
 
@@ -248,51 +288,47 @@ async function cargarProducto() {
 
 `;
 
+    /*==================================
+    MINIATURAS
+    ==================================*/
+
     const thumbs = document.getElementById("gallery-thumbnails");
 
-    if (imagenes.length > 0) {
+    imagenes.forEach(img => {
 
-        imagenes.forEach(img => {
+        thumbs.innerHTML += `
 
-            thumbs.innerHTML += `
-                <div class="gallery-thumb">
+<div class="gallery-thumb">
 
-                    <img
-                        src="${img.imagen}"
-                        onclick="changeImage('${img.imagen}')">
+    <img
+        src="${img.imagen}"
+        onclick="changeImage('${img.imagen}')">
 
-                </div>
-            `;
+</div>
 
-        });
+`;
 
-    } else {
+    });
 
-        thumbs.innerHTML = `
-            <div class="gallery-thumb">
-
-                <img
-                    src="${producto.imagen_principal}"
-                    onclick="changeImage('${producto.imagen_principal}')">
-
-            </div>
-        `;
-
-    }
+    /*==================================
+    TALLES
+    ==================================*/
 
     const sizeContainer = document.getElementById("size-selector");
 
     variantes.forEach(variante => {
 
         sizeContainer.innerHTML += `
-            <button
-                class="size-btn"
-                data-id="${variante.id}">
 
-                ${variante.talle}
+<button
+    class="size-btn"
+    data-id="${variante.id}">
 
-            </button>
-        `;
+    ${variante.talle}
+
+</button>
+
+`;
 
     });
 

@@ -1,16 +1,18 @@
 /*==================================================
-PRODUCT PAGE
+PRODUCT
 ==================================================*/
 
 .product-view{
 
     display:grid;
 
-    grid-template-columns:1.2fr 1fr;
+    grid-template-columns:120px 1fr 480px;
 
-    gap:90px;
+    gap:70px;
 
-    padding:160px 0 120px;
+    padding:170px 0 120px;
+
+    align-items:start;
 
 }
 
@@ -20,11 +22,7 @@ GALERÍA
 
 .product-gallery{
 
-    display:grid;
-
-    grid-template-columns:90px 1fr;
-
-    gap:20px;
+    display:contents;
 
 }
 
@@ -34,29 +32,29 @@ GALERÍA
 
     flex-direction:column;
 
-    gap:15px;
+    gap:18px;
 
 }
 
 .gallery-thumb{
 
-    width:90px;
+    width:100px;
 
-    aspect-ratio:1;
-
-    border:1px solid #e5e5e5;
+    height:125px;
 
     cursor:pointer;
 
     overflow:hidden;
 
-    transition:.25s;
+    background:#f7f7f7;
+
+    transition:.3s;
 
 }
 
 .gallery-thumb:hover{
 
-    border-color:var(--color-navy);
+    opacity:.7;
 
 }
 
@@ -70,21 +68,33 @@ GALERÍA
 
 }
 
+/*==================================================
+IMAGEN PRINCIPAL
+==================================================*/
+
 .gallery-main{
 
-    background:#f7f7f7;
+    display:flex;
 
-    overflow:hidden;
+    justify-content:center;
+
+    align-items:flex-start;
 
 }
 
 .gallery-main img{
-    transition:opacity .25s ease;
-    width:100%;
 
-    display:block;
+    width:auto;
 
-    object-fit:cover;
+    height:auto;
+
+    max-width:720px;
+
+    max-height:820px;
+
+    object-fit:contain;
+
+    transition:.35s;
 
 }
 
@@ -94,45 +104,43 @@ INFORMACIÓN
 
 .product-information{
 
-    display:flex;
-
-    flex-direction:column;
+    max-width:480px;
 
 }
 
 .product-category{
 
-    font-size:.8rem;
+    display:block;
 
-    letter-spacing:.3rem;
+    margin-bottom:15px;
 
-    color:#666;
+    font-size:.75rem;
 
-    margin-bottom:20px;
+    letter-spacing:.22em;
 
     text-transform:uppercase;
+
+    color:#8b8b8b;
 
 }
 
 .product-information h1{
 
-    font-size:3rem;
+    font-size:3.2rem;
 
     font-weight:500;
 
-    line-height:1.05;
+    line-height:1;
 
-    margin-bottom:20px;
+    margin-bottom:25px;
 
 }
 
 .product-price{
 
-    font-size:2rem;
+    font-size:1.3rem;
 
-    font-weight:600;
-
-    margin-bottom:30px;
+    margin-bottom:28px;
 
 }
 
@@ -142,7 +150,7 @@ INFORMACIÓN
 
     line-height:1.9;
 
-    margin-bottom:35px;
+    margin-bottom:40px;
 
 }
 
@@ -154,9 +162,9 @@ TALLES
 
     display:flex;
 
-    flex-wrap:wrap;
-
     gap:12px;
+
+    flex-wrap:wrap;
 
     margin-bottom:40px;
 
@@ -164,35 +172,25 @@ TALLES
 
 .size-btn{
 
-    width:58px;
+    width:52px;
 
-    height:58px;
+    height:52px;
+
+    border:1px solid #ddd;
 
     background:white;
-
-    border:1px solid #d8d8d8;
 
     cursor:pointer;
 
     transition:.25s;
 
-    font-size:.95rem;
-
 }
 
 .size-btn:hover{
 
-    border-color:black;
-
-}
-
-.size-btn.active{
-
     background:black;
 
     color:white;
-
-    border-color:black;
 
 }
 
@@ -200,15 +198,13 @@ TALLES
 BOTÓN
 ==================================================*/
 
-.product-actions{
-
-    margin-bottom:45px;
-
-}
-
-.product-actions .btn-primary{
+.btn-primary{
 
     width:100%;
+
+    height:58px;
+
+    margin-bottom:45px;
 
 }
 
@@ -218,21 +214,21 @@ DETALLES
 
 .product-details{
 
-    border-top:1px solid #ececec;
+    display:flex;
 
-    padding-top:30px;
+    flex-direction:column;
 
-    list-style:none;
+    gap:18px;
+
+    color:#666;
 
 }
 
 .product-details li{
 
-    padding:10px 0;
+    border-top:1px solid #eee;
 
-    color:#555;
-
-    border-bottom:1px solid #f2f2f2;
+    padding-top:18px;
 
 }
 
@@ -240,23 +236,13 @@ DETALLES
 RESPONSIVE
 ==================================================*/
 
-@media(max-width:1000px){
+@media(max-width:1200px){
 
     .product-view{
 
         grid-template-columns:1fr;
 
-        gap:60px;
-
-    }
-
-}
-
-@media(max-width:768px){
-
-    .product-gallery{
-
-        grid-template-columns:1fr;
+        gap:45px;
 
     }
 
@@ -264,19 +250,47 @@ RESPONSIVE
 
         flex-direction:row;
 
-        order:2;
+        justify-content:center;
 
     }
+
+    .gallery-main{
+
+        justify-content:center;
+
+    }
+
+    .gallery-main img{
+
+        max-width:100%;
+
+        max-height:650px;
+
+    }
+
+    .product-information{
+
+        max-width:700px;
+
+        margin:auto;
+
+    }
+
+}
+
+@media(max-width:768px){
 
     .gallery-thumb{
 
         width:70px;
 
+        height:90px;
+
     }
 
     .product-information h1{
 
-        font-size:2.2rem;
+        font-size:2.4rem;
 
     }
 
