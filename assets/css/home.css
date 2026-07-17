@@ -380,6 +380,27 @@ FEATURED
     gap:45px;
 
 }
+@media(max-width:1100px){
+
+    .products-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .products-grid{
+
+        grid-template-columns:1fr;
+
+        gap:35px;
+
+    }
+
+}
 
 /*==================================================
 QUALITY
@@ -442,7 +463,42 @@ QUALITY
     color:var(--color-gray);
 
 }
+@media(max-width:900px){
 
+    .quality-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:50px 25px;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .quality-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+@media(max-width:700px){
+
+    .newsletter form{
+
+        flex-direction:column;
+
+    }
+
+    .newsletter input{
+
+        width:100%;
+
+    }
+
+}
 /*==================================================
 LOOKBOOK
 ==================================================*/
@@ -593,7 +649,7 @@ PRODUCT CARD
 
 .product-image{
     position:relative;
-    width:380px;
+    width:100%;
     overflow:hidden;
     background:#f5f5f5;
     aspect-ratio:4/5;

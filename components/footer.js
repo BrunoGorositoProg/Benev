@@ -18,7 +18,7 @@ class Footer {
 
             <p>
 
-                Built Different.
+             
 
             </p>
 
