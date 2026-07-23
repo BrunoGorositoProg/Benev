@@ -46,25 +46,29 @@ class Card {
 
         <div class="product-info">
 
-            <h3>
+    <div class="product-header">
 
-                ${this.producto.nombre}
+        <h3>
 
-            </h3>
+            ${this.producto.nombre}
 
-            <p class="product-price">
+        </h3>
 
-                $${Number(this.producto.precio).toLocaleString("es-AR")}
+        <span class="product-price">
 
-            </p>
+            $${Number(this.producto.precio).toLocaleString("es-AR")}
 
-            <span class="product-fit">
+        </span>
 
-                ${this.producto.fit || "Oversized Fit"}
+    </div>
 
-            </span>
+    <span class="product-fit">
 
-        </div>
+        ${this.producto.fit || "Oversized Fit"}
+
+    </span>
+
+</div>
 
     </a>
 
