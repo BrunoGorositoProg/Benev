@@ -259,7 +259,7 @@
 .quality-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  divide:horizontal;
+  visibility:horizontal;
 }
 .quality-item{
   display:flex;
