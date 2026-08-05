@@ -4,360 +4,259 @@ let productosFiltrados = [];
 /*==================================
 CARGAR TODOS LOS PRODUCTOS
 ==================================*/
-
 async function cargarProductos() {
-
     try {
-
         productos = await DB.getProductos();
-
         productosFiltrados = [...productos];
-
         renderHomeProducts();
-
         renderShopProducts();
-
+        iniciarFiltros();
         iniciarOrdenamiento();
-
     } catch (error) {
-
         console.error("Error cargando productos:", error);
-
     }
-
 }
 
 /*==================================
-HOME
+HOME — destacados
 ==================================*/
-
 function renderHomeProducts() {
-
     const container = document.getElementById("featured-products");
-
     if (!container) return;
-
-    container.innerHTML = "";
-
-    const destacados = productos
-        .filter(producto => producto.destacado)
-        .slice(0, 4);
-
-    destacados.forEach(producto => {
-
-        const card = new Card(producto);
-
-        container.innerHTML += card.render();
-
-    });
-
+    const destacados = productos.filter(p => p.destacado).slice(0, 3);
+    container.innerHTML = destacados.map(p => new Card(p).render()).join("");
 }
 
 /*==================================
-SHOP
+SHOP — grilla completa
 ==================================*/
-
 function renderShopProducts() {
-
     const container = document.getElementById("shop-products");
-
     if (!container) return;
-
-    container.innerHTML = "";
 
     if (productosFiltrados.length === 0) {
-
         container.innerHTML = `
             <div class="shop-empty">
-                <h2>No products found.</h2>
-            </div>
-        `;
-
+                <h2>No hay productos disponibles.</h2>
+                <p>Volvé más tarde.</p>
+            </div>`;
         return;
-
     }
 
-    productosFiltrados.forEach(producto => {
+    container.innerHTML = productosFiltrados.map(p => new Card(p).render()).join("");
 
-        const card = new Card(producto);
-
-        container.innerHTML += card.render();
-
-    });
-    if (typeof Animation !== "undefined") {
-
-    Animation.fadeElements();
-
-}
-
-    const contador = document.getElementById("product-count");
-
-    if (contador) {
-
-        contador.textContent = productosFiltrados.length;
-
-    }
-
+    if (typeof Animation !== "undefined") Animation.fadeElements();
 }
 
 /*==================================
-PRODUCT
+FILTROS DE CATEGORÍA
 ==================================*/
-function iniciarOrdenamiento(){
+function iniciarFiltros() {
+    const btns = document.querySelectorAll(".filter-btn");
+    if (!btns.length) return;
 
-    const select = document.getElementById("sort-products");
+    btns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            btns.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
 
-    if(!select) return;
+            const filtro = btn.dataset.filter;
+            productosFiltrados = filtro === "all"
+                ? [...productos]
+                : productos.filter(p => p.categoria?.toLowerCase() === filtro);
 
-    select.addEventListener("change",()=>{
-
-        switch(select.value){
-
-            case "Newest":
-
-                productosFiltrados.sort((a,b)=>b.id-a.id);
-
-            break;
-
-            case "Price ↑":
-
-                productosFiltrados.sort((a,b)=>a.precio-b.precio);
-
-            break;
-
-            case "Price ↓":
-
-                productosFiltrados.sort((a,b)=>b.precio-a.precio);
-
-            break;
-
-        }
-
-        renderShopProducts();
-
+            renderShopProducts();
+        });
     });
-
 }
 
+/*==================================
+ORDENAMIENTO
+==================================*/
+function iniciarOrdenamiento() {
+    const select = document.getElementById("sort-products");
+    if (!select) return;
+
+    select.addEventListener("change", () => {
+        switch (select.value) {
+            case "new":
+                productosFiltrados.sort((a, b) => b.id - a.id);
+                break;
+            case "price-asc":
+                productosFiltrados.sort((a, b) => a.precio - b.precio);
+                break;
+            case "price-desc":
+                productosFiltrados.sort((a, b) => b.precio - a.precio);
+                break;
+        }
+        renderShopProducts();
+    });
+}
+
+/*==================================
+PÁGINA DE PRODUCTO
+==================================*/
 async function cargarProducto() {
-
     const container = document.getElementById("product-page");
-
     if (!container) return;
 
-    const params = new URLSearchParams(window.location.search);
-
-    const id = Number(params.get("id"));
-
+    const id = Number(new URLSearchParams(window.location.search).get("id"));
     if (!id) return;
 
     const producto = await DB.getProducto(id);
-
     if (!producto) {
-
-        container.innerHTML = `
-            <h2>Producto no encontrado.</h2>
-        `;
-
+        container.innerHTML = `<h2 style="padding:120px 0;text-align:center">Producto no encontrado.</h2>`;
         return;
-
     }
 
     const variantes = await DB.getVariantes(id);
-
     let imagenes = await DB.getImagenes(id);
 
-    /*==================================
-    IMÁGENES
-    ==================================*/
-
     if (!imagenes || imagenes.length === 0) {
-
-        imagenes = [];
-
-        [
+        imagenes = [
             producto.imagen_principal,
             producto.imagen2,
             producto.imagen3,
             producto.imagen4
-
-        ].forEach(imagen => {
-
-            if (imagen) {
-
-                imagenes.push({
-
-                    imagen
-
-                });
-
-            }
-
-        });
-
+        ].filter(Boolean).map(imagen => ({ imagen }));
     }
 
     container.innerHTML = `
-
 <section class="product-view">
 
     <div class="product-gallery">
 
-        <div
-            class="gallery-thumbnails"
-            id="gallery-thumbnails">
-
-        </div>
+        <div class="gallery-thumbnails" id="gallery-thumbnails"></div>
 
         <div class="gallery-main">
-
             <img
                 id="main-product-image"
                 src="${imagenes[0].imagen}"
                 alt="${producto.nombre}">
-
         </div>
 
     </div>
 
     <div class="product-information">
 
-        <span class="product-category">
+        <span class="product-category">${producto.categoria || ""}</span>
 
-            ${producto.categoria}
+        <h1>${producto.nombre}</h1>
 
-        </span>
+        <p class="product-price">$${Number(producto.precio).toLocaleString("es-AR")}</p>
 
-        <h1>
+        <p class="product-description">${producto.descripcion || ""}</p>
 
-            ${producto.nombre}
+        <span class="size-label">Talle</span>
+        <div class="size-selector" id="size-selector"></div>
 
-        </h1>
-
-        <p class="product-price">
-
-            $${Number(producto.precio).toLocaleString("es-AR")}
-
-        </p>
-
-        <p class="product-description">
-
-            ${producto.descripcion || ""}
-
-        </p>
-
-        <div
-            class="size-selector"
-            id="size-selector">
-
-        </div>
-
-        <button
-            class="btn-primary"
-            id="add-cart-btn">
-
-            Add To Bag
-
+        <button class="btn-primary btn-add-cart" id="add-cart-btn">
+            Agregar al carrito
         </button>
 
         <ul class="product-details">
-
-            <li>
-
-                ${producto.fit}
-
-            </li>
-
-            <li>
-
-                ${producto.gramaje}
-
-            </li>
-
-            <li>
-
-                ${producto.composicion}
-
-            </li>
-
+            ${producto.fit        ? `<li>${producto.fit}</li>` : ""}
+            ${producto.gramaje    ? `<li>${producto.gramaje}</li>` : ""}
+            ${producto.composicion? `<li>${producto.composicion}</li>` : ""}
         </ul>
 
     </div>
 
-</section>
+</section>`;
 
-`;
-
-    /*==================================
-    MINIATURAS
-    ==================================*/
-
+    /* miniaturas */
     const thumbs = document.getElementById("gallery-thumbnails");
-
-    imagenes.forEach(img => {
-
-        thumbs.innerHTML += `
-
-<div class="gallery-thumb">
-
-    <img
-        src="${img.imagen}"
-        onclick="changeImage('${img.imagen}')">
-
-</div>
-
-`;
-
+    imagenes.forEach((img, i) => {
+        const div = document.createElement("div");
+        div.className = "gallery-thumb" + (i === 0 ? " active" : "");
+        div.innerHTML = `<img src="${img.imagen}" alt="">`;
+        div.addEventListener("click", () => {
+            document.querySelectorAll(".gallery-thumb").forEach(t => t.classList.remove("active"));
+            div.classList.add("active");
+            changeImage(img.imagen);
+        });
+        thumbs.appendChild(div);
     });
 
-    /*==================================
-    TALLES
-    ==================================*/
-
+    /* talles */
     const sizeContainer = document.getElementById("size-selector");
-
-    variantes.forEach(variante => {
-
-        sizeContainer.innerHTML += `
-
-<button
-    class="size-btn"
-    data-id="${variante.id}">
-
-    ${variante.talle}
-
-</button>
-
-`;
-
+    variantes.forEach(v => {
+        const sinStock = (v.stock ?? 0) <= 0;
+        const btn = document.createElement("button");
+        btn.className   = "size-btn" + (sinStock ? " sin-stock" : "");
+        btn.dataset.id  = v.id;
+        btn.dataset.stock = v.stock ?? 0;
+        btn.disabled    = sinStock;
+        btn.title       = sinStock ? "Sin stock" : `Stock: ${v.stock}`;
+        btn.textContent = v.talle;
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("selected"));
+            btn.classList.add("selected");
+        });
+        sizeContainer.appendChild(btn);
     });
 
+    /* ── ADD TO CART ── */
+    const addBtn = document.getElementById("add-cart-btn");
+    addBtn?.addEventListener("click", () => {
+        const selectedBtn = document.querySelector(".size-btn.selected");
+        if (!selectedBtn) {
+            sizeContainer.style.outline = "1px solid red";
+            setTimeout(() => sizeContainer.style.outline = "", 1200);
+            return;
+        }
+        const variante = variantes.find(v => v.id === Number(selectedBtn.dataset.id));
+        if (!variante || !window.cart) return;
+
+        const stockDisponible = variante.stock ?? 0;
+        const enCarrito = window.cart.items
+            .filter(i => i.varianteId === variante.id)
+            .reduce((acc, i) => acc + i.cantidad, 0);
+
+        if (enCarrito >= stockDisponible) {
+            addBtn.textContent = "Sin stock disponible";
+            setTimeout(() => { addBtn.textContent = "Agregar al carrito"; }, 2000);
+            return;
+        }
+
+        window.cart.add(producto, variante);
+    });
+
+    /* relacionados */
+    cargarRelacionados(producto.categoria, id);
 }
 
 /*==================================
-CAMBIAR IMAGEN
+PRODUCTOS RELACIONADOS
 ==================================*/
+async function cargarRelacionados(categoria, idActual) {
+    const container = document.getElementById("related-products");
+    if (!container) return;
 
+    const todos = productos.length ? productos : await DB.getProductos();
+    const relacionados = todos
+        .filter(p => p.categoria === categoria && p.id !== idActual)
+        .slice(0, 4);
+
+    if (!relacionados.length) {
+        document.querySelector(".related-products")?.remove();
+        return;
+    }
+
+    container.innerHTML = relacionados.map(p => new Card(p).render()).join("");
+}
+
+/*==================================
+CAMBIAR IMAGEN PRINCIPAL
+==================================*/
 function changeImage(url) {
-
-    const image = document.getElementById("main-product-image");
-
-    if (!image) return;
-
-    image.style.opacity = 0;
-
+    const img = document.getElementById("main-product-image");
+    if (!img) return;
+    img.style.opacity = 0;
     setTimeout(() => {
-
-        image.src = url;
-
-        image.onload = () => {
-
-            image.style.opacity = 1;
-
-        };
-
+        img.src = url;
+        img.onload = () => { img.style.opacity = 1; };
     }, 150);
-
 }
 
 window.changeImage = changeImage;

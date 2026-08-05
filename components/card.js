@@ -1,83 +1,36 @@
 class Card {
 
     constructor(producto) {
-
         this.producto = producto;
-
     }
 
     render() {
-
-        const segundaImagen =
-            this.producto.imagen2 ||
-            this.producto.imagen_principal;
+        const p   = this.producto;
+        const img2 = p.imagen2 || p.imagen_principal;
 
         return `
-
 <article class="product-card fade-up">
-
-    <a href="product.html?id=${this.producto.id}">
+    <a class="product-card-link" href="product.html?id=${p.id}">
 
         <div class="product-image">
-
-            <img
-                class="img-front"
-                src="${this.producto.imagen_principal}"
-                alt="${this.producto.nombre}"
-                loading="lazy">
-
-            <img
-                class="img-back"
-                src="${segundaImagen}"
-                alt="${this.producto.nombre}"
-                loading="lazy">
-
-            ${this.producto.nuevo ? `
-
-                <span class="product-tag">
-
-                    NEW
-
-                </span>
-
-            ` : ""}
-
+            <img class="img-front" src="${p.imagen_principal}" alt="${p.nombre}" loading="lazy">
+            <img class="img-back"  src="${img2}"               alt="${p.nombre}" loading="lazy">
+            ${p.nuevo ? `<span class="product-tag">Nuevo</span>` : ""}
+            ${p.destacado && !p.nuevo ? `<span class="product-tag">Destacado</span>` : ""}
         </div>
 
         <div class="product-info">
-
-    <div class="product-header">
-
-        <h3>
-
-            ${this.producto.nombre}
-
-        </h3>
-
-        <span class="product-price">
-
-            $${Number(this.producto.precio).toLocaleString("es-AR")}
-
-        </span>
-
-    </div>
-
-    <span class="product-fit">
-
-        ${this.producto.fit || "Oversized Fit"}
-
-    </span>
-
-</div>
+            <span class="product-category">${p.categoria || ""}</span>
+            <div class="product-row">
+                <span class="product-name">${p.nombre}</span>
+                <span class="product-price">$${Number(p.precio).toLocaleString("es-AR")}</span>
+            </div>
+            <span class="product-fit">${p.fit || "Oversized Fit"}</span>
+        </div>
 
     </a>
-
-</article>
-
-`;
-
+</article>`;
     }
-
 }
 
 window.Card = Card;

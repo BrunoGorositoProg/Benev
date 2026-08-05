@@ -1,132 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colección | Benev</title>
+  <link rel="icon" href="assets/img/favicon.png">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS — orden importante: variables → global → página → módulos -->
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/shop.css">
+  <link rel="stylesheet" href="assets/css/cart.css">
+  <link rel="stylesheet" href="assets/css/animation.css">
 
-    <title>Collection | Benev</title>
-    <link rel="stylesheet" href="assets/css/product.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    
-    <link rel="stylesheet" href="assets/css/shop.css">
-    <link rel="stylesheet" href="assets/css/reset.css">
-    <link rel="stylesheet" href="assets/css/variables.css">
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/cart.css">
-    <link rel="stylesheet" href="assets/css/animation.css">
-
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body data-page="shop">
 
-<div id="navbar"></div>
+  <div id="navbar"></div>
 
-<main>
+  <main>
 
-    <!-- SHOP HERO -->
-
+    <!-- HERO -->
     <section class="shop-hero">
-
-        <div class="container">
-
-            <span class="section-label">
-                COLLECTION
-            </span>
-
-            <h1>
-                Oversized Essentials
-            </h1>
-
-            <p>
-                Designed for everyday. Built to last.
-            </p>
-
-        </div>
-
+      <div class="container">
+        <span class="label">Colección</span>
+        <h1>Oversized Essentials</h1>
+        <p>Diseñado para el día a día. Construido para durar.</p>
+      </div>
     </section>
 
-    <!-- FILTERS -->
-
+    <!-- FILTROS -->
     <section class="shop-toolbar">
+      <div class="container toolbar-container">
 
-        <div class="container toolbar-container">
-
-            <div class="toolbar-left">
-
-                <button class="filter-btn active">
-                    All
-                </button>
-
-                <button class="filter-btn">
-                    Hoodies
-                </button>
-
-                <button class="filter-btn">
-                    Zip
-                </button>
-
-                <button class="filter-btn">
-                    Limited
-                </button>
-
-            </div>
-
-            <div class="toolbar-right">
-
-                <select id="sort-products">
-
-                    <option>Newest</option>
-
-                    <option>Price ↑</option>
-
-                    <option>Price ↓</option>
-
-                </select>
-
-            </div>
-
+        <div class="toolbar-left">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="hoodie">Hoodies</button>
+          <button class="filter-btn" data-filter="zip">Zip</button>
+          <button class="filter-btn" data-filter="limited">Limited</button>
         </div>
 
+        <div class="toolbar-right">
+          <select id="sort-products" aria-label="Ordenar productos">
+            <option value="new">Más nuevos</option>
+            <option value="price-asc">Precio ↑</option>
+            <option value="price-desc">Precio ↓</option>
+          </select>
+        </div>
+
+      </div>
     </section>
 
-    <!-- PRODUCTS -->
-
+    <!-- PRODUCTOS -->
     <section class="shop-products">
-
-        <div class="container">
-
-            <div
-                id="shop-products"
-                class="products-grid">
-
-            </div>
-
-        </div>
-
+      <div class="container">
+        <div id="shop-products" class="shop-grid"></div>
+      </div>
     </section>
 
-</main>
+  </main>
 
-<div id="footer"></div>
+  <div id="footer"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="components/navbar.js"></script>
-<script src="components/footer.js"></script>
-<script src="components/card.js"></script>
-
-<script src="assets/js/supabase.js"></script>
-<script src="assets/js/products.js"></script>
-<script src="assets/js/cart.js"></script>
-<script src="assets/js/animations.js"></script>
-<script src="assets/js/app.js"></script>
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="components/navbar.js"></script>
+  <script src="components/footer.js"></script>
+  <script src="components/card.js"></script>
+  <script src="components/cartDrawer.js"></script>
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/app.js"></script>
 
 </body>
-
 </html>
