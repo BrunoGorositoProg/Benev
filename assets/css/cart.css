@@ -43,7 +43,6 @@
   justify-content:space-between;
   align-items:flex-start;
 }
-.cart-header-info{}
 .cart-label{
   display:block;
   font-size:var(--fs-xs);
