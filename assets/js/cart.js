@@ -242,7 +242,7 @@ class Cart {
         });
         msg += `*TOTAL: $${this.getSubtotal().toLocaleString("es-AR")}*`;
 
-        window.open(`https://wa.me/5493492XXXXXXXX?text=${msg}`, "_blank");
+        window.open(`https://wa.me/5493492603416?text=${msg}`, "_blank");
     }
 
     /* ── HELPERS ─────────────────────────────────────────── */
