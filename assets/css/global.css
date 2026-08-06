@@ -106,7 +106,7 @@ main{ overflow-x:hidden; }
   justify-content:space-between;
   align-items:center;
 }
-.nav-logo img{ height:42px; }
+.nav-logo img{ height: 60px; }
 .nav-menu{
   display:flex;
   gap:48px;
@@ -114,7 +114,8 @@ main{ overflow-x:hidden; }
 .nav-menu a{
   font-size:var(--fs-xs);
   font-weight:var(--fw-semibold);
-  letter-spacing:.18em;
+  letter-spacing:.14em;
+  font-size: 14px;
   text-transform:uppercase;
   position:relative;
   transition:color var(--transition);
@@ -209,14 +210,14 @@ main{ overflow-x:hidden; }
   gap:60px;
 }
 .footer-brand img{
-  height:40px;
+  height:60px;
   margin-bottom:20px;
   opacity:.9;
 }
 .footer-brand p{
   color:rgba(255,255,255,.4);
-  font-size:var(--fs-sm);
-  letter-spacing:.18em;
+  font-size: 12px;
+  letter-spacing:.1em;
   text-transform:uppercase;
 }
 .footer-links{ display:flex; gap:80px; }

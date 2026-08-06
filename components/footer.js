@@ -7,7 +7,8 @@ class Footer {
 
     <div class="footer-brand">
       <img src="assets/img/BenevSinFondoBlanco.png" alt="Benev">
-      <p>Built Different.</p>
+      <p>Hecho con intención.</p>
+      <p>Los detalles cuentan. Nosotros empezamos por ellos.</p>
     </div>
 
     <div class="footer-links">
