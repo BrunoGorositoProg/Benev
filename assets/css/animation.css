@@ -2,7 +2,7 @@
    FADE UP
    ============================================================ */
 .fade-up{
-  opacity:0;
+  opacity:1;
   transform:translateY(40px);
   transition:opacity .75s ease, transform .75s ease;
 }
