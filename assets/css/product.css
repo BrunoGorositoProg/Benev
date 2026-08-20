@@ -308,3 +308,141 @@
 @media(max-width:420px){
   .related-grid{ grid-template-columns:1fr; }
 }
+/* ============================================================
+   FIT ROW — label + botón guía de talles
+   ============================================================ */
+.product-fit-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+}
+.product-fit-label {
+    font-size: var(--fs-xs);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+}
+.size-guide-btn {
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.size-guide-btn:hover {
+    border-color: var(--color-text);
+    background: var(--color-text);
+    color: #fff;
+}
+
+/* ============================================================
+   MODAL GUÍA DE TALLES
+   ============================================================ */
+.size-guide-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.size-guide-modal[hidden] { display: none; }
+
+.size-guide-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+}
+.size-guide-panel {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    width: 680px;
+    max-width: 92vw;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 48px 40px 36px;
+    border-radius: 2px;
+}
+.size-guide-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: var(--color-text-light);
+    cursor: pointer;
+    line-height: 1;
+    transition: var(--transition);
+}
+.size-guide-close:hover { color: var(--color-text); }
+
+.size-guide-product {
+    font-size: var(--fs-xs);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    margin-bottom: 6px;
+}
+.size-guide-title {
+    font-size: 1.5rem;
+    font-weight: var(--fw-medium);
+    letter-spacing: -.3px;
+    margin-bottom: 28px;
+    color: var(--color-text);
+}
+.size-guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+.size-guide-table th {
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    font-weight: 500;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+}
+.size-guide-table th:not(:first-child),
+.size-guide-table td:not(:first-child) { text-align: center; }
+.size-guide-table td {
+    padding: 13px 0;
+    font-size: var(--fs-sm);
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+}
+.size-guide-table td:first-child { font-weight: var(--fw-medium); }
+.size-guide-note {
+    font-size: 11px;
+    color: var(--color-text-light);
+    letter-spacing: .04em;
+}
+.size-guide-body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.size-guide-illustration img {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    border-radius: 2px;
+}
+.size-guide-right {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .size-guide-panel { padding: 36px 20px 28px; }
+}

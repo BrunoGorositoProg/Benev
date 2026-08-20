@@ -147,6 +147,40 @@ async function cargarProducto() {
 
         <p class="product-description">${producto.descripcion || ""}</p>
 
+        ${producto.fit ? `
+        <div class="product-fit-row">
+            <span class="product-fit-label">${producto.fit}</span>
+            ${producto.size_guide_id ? `
+            <button class="size-guide-btn" id="size-guide-btn">
+                Guía de talles
+            </button>` : ""}
+        </div>` : ""}
+
+        <div class="size-guide-modal" id="size-guide-modal" hidden>
+            <div class="size-guide-backdrop" id="size-guide-backdrop"></div>
+            <div class="size-guide-panel">
+                <button class="size-guide-close" id="size-guide-close">&#x2715;</button>
+                <p class="size-guide-product">${producto.nombre}</p>
+                <h2 class="size-guide-title">Guía de talles</h2>
+                <div class="size-guide-body">
+                    <div class="size-guide-illustration" id="size-guide-illustration"></div>
+                    <div class="size-guide-right">
+                        <table class="size-guide-table">
+                            <thead>
+                                <tr>
+                                    <th>Talle</th>
+                                    <th>Largo (cm)</th>
+                                    <th>Ancho (cm)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="size-guide-body"></tbody>
+                        </table>
+                        <p class="size-guide-note">Medidas en cm, prenda en plano.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <span class="size-label">Talle</span>
         <div class="size-selector" id="size-selector"></div>
 
@@ -221,6 +255,52 @@ async function cargarProducto() {
 
         window.cart.add(producto, variante);
     });
+
+    /* ── GUÍA DE TALLES ── */
+    if (producto.size_guide_id) {
+        const guideBtn = document.getElementById("size-guide-btn");
+        const modal    = document.getElementById("size-guide-modal");
+        const closeBtn = document.getElementById("size-guide-close");
+        const backdrop = document.getElementById("size-guide-backdrop");
+        const tbody    = document.getElementById("size-guide-body");
+
+        const openModal  = () => {
+            modal.hidden = false;
+            document.body.style.overflow = "hidden";
+        };
+        const closeModal = () => {
+            modal.hidden = true;
+            document.body.style.overflow = "";
+        };
+
+        guideBtn?.addEventListener("click", async () => {
+            // solo consulta Supabase la primera vez
+            if (!tbody.hasChildNodes()) {
+                const guide = await DB.getSizeGuide(producto.size_guide_id);
+                if (guide?.talles) {
+                    tbody.innerHTML = guide.talles.map(t => `
+                        <tr>
+                            <td>${t.talle}</td>
+                            <td>${t.largo}</td>
+                            <td>${t.ancho}</td>
+                        </tr>`).join("");
+                }
+                if (guide?.imagen_guia) {
+                    const illustration = document.getElementById("size-guide-illustration");
+                    if (illustration) {illustration.innerHTML = `<img src="${guide.imagen_guia}" alt="Guía de talles ${producto.nombre}">`;
+                        
+                    }
+                }
+            }
+            openModal();
+        });
+
+        closeBtn?.addEventListener("click", closeModal);
+        backdrop?.addEventListener("click", closeModal);
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") closeModal();
+        });
+    }
 
     /* relacionados */
     cargarRelacionados(producto.categoria, id);
