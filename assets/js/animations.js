@@ -10,7 +10,7 @@ const Animation = {
         this.navbarShadow();
 
         this.scrollTop();
-
+ 
     },
 
     fadeElements() {

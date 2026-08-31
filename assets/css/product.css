@@ -448,4 +448,4 @@
 }
 @media(max-width:420px){
   .related-grid{ grid-template-columns:1fr; }
-}
+} 

@@ -65,7 +65,7 @@ class CartDrawer {
         <div class="cart-total">
 
             <span>
-
+ 
                 Total
 
             </span>

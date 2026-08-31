@@ -73,7 +73,7 @@
   font-weight:var(--fw-semibold);
   letter-spacing:.1em;
   text-transform:uppercase;
-  color:var(--color-text);
+  color:var(--color-text); 
   cursor:pointer;
   appearance:none;
   -webkit-appearance:none;

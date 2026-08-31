@@ -23,7 +23,7 @@ class Navbar {
       </button>
     </div>
 
-  </div>
+  </div> 
 </header>
 
 <div id="mobile-menu" class="mobile-menu">

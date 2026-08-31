@@ -24,7 +24,7 @@ class Footer {
       </div>
     </div>
 
-  </div>
+  </div> 
 
   <div class="container footer-bottom">
     © ${year} Benev — Built Different.

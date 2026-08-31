@@ -119,7 +119,7 @@ class Cart {
                 stock:     variante.stock ?? null,
                 cantidad:  1
             });
-        }
+        } 
         this.save();
         this.render();
         this.open();

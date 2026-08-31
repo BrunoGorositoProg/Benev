@@ -29,7 +29,7 @@ class Card {
         </div>
 
     </a>
-</article>`;
+</article>`; 
     }
 }
 

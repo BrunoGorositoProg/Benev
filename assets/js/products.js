@@ -108,7 +108,7 @@ function ordenarVariantes(variantes) {
         if (ib === -1) return -1;
         return ia - ib;
     }); 
-}
+} 
 
 /*==================================
 PÁGINA DE PRODUCTO

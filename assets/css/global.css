@@ -209,7 +209,7 @@ main{ overflow-x:hidden; }
   align-items:flex-start;
   gap:60px;
 }
-.footer-brand img{
+.footer-brand img{ 
   height:60px;
   margin-bottom:20px;
   opacity:.9;

@@ -397,7 +397,7 @@
   .quality-grid{ grid-template-columns:1fr; }
   .quality-item{
     border-bottom:1px solid rgba(5,14,53,.12);
-    padding:24px 16px;
+    padding:24px 16px; 
   }
   .quality-item:last-child{ border-bottom:none; }
   .lookbook-track img{ width:200px; height:300px; }

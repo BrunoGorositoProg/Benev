@@ -57,7 +57,7 @@ async function cargarDatos() {
 
     }
 
-}
+} 
 
 function iniciarAnimaciones() {
 

@@ -62,7 +62,7 @@ const DB = {
     /*==================================
     GUÍA DE TALLES
     ==================================*/
-
+ 
     async getSizeGuide(id) {
         const { data, error } = await supabaseClient
             .from("size_guides")
