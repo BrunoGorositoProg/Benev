@@ -91,7 +91,7 @@ function iniciarOrdenamiento() {
         }
         renderShopProducts();
     });
-}
+}  
 
 /*==================================
 ORDEN DE TALLES
@@ -107,7 +107,7 @@ function ordenarVariantes(variantes) {
         if (ia === -1) return 1;
         if (ib === -1) return -1;
         return ia - ib;
-    });
+    }); 
 }
 
 /*==================================
