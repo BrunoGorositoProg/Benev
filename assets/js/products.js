@@ -94,6 +94,23 @@ function iniciarOrdenamiento() {
 }
 
 /*==================================
+ORDEN DE TALLES
+==================================*/
+const ORDEN_TALLES = ["XL", "L", "M", "S", "XS"];
+
+function ordenarVariantes(variantes) {
+    return [...variantes].sort((a, b) => {
+        const ia = ORDEN_TALLES.indexOf(a.talle.toUpperCase());
+        const ib = ORDEN_TALLES.indexOf(b.talle.toUpperCase());
+        // Si el talle no está en la lista (ej: numérico), va al final alfabético
+        if (ia === -1 && ib === -1) return a.talle.localeCompare(b.talle);
+        if (ia === -1) return 1;
+        if (ib === -1) return -1;
+        return ia - ib;
+    });
+}
+
+/*==================================
 PÁGINA DE PRODUCTO
 ==================================*/
 async function cargarProducto() {
@@ -109,7 +126,8 @@ async function cargarProducto() {
         return;
     }
 
-    const variantes = await DB.getVariantes(id);
+    const variantesRaw = await DB.getVariantes(id);
+    const variantes    = ordenarVariantes(variantesRaw); // ← ORDER FIX
     let imagenes = await DB.getImagenes(id);
 
     if (!imagenes || imagenes.length === 0) {
@@ -117,7 +135,11 @@ async function cargarProducto() {
             producto.imagen_principal,
             producto.imagen2,
             producto.imagen3,
-            producto.imagen4
+            producto.imagen4,
+            producto.imagen5,
+            producto.imagen6,
+            producto.imagen7,
+            producto.imagen8
         ].filter(Boolean).map(imagen => ({ imagen }));
     }
 
@@ -212,17 +234,17 @@ async function cargarProducto() {
         thumbs.appendChild(div);
     });
 
-    /* talles */
+    /* talles — ya vienen ordenados */
     const sizeContainer = document.getElementById("size-selector");
     variantes.forEach(v => {
         const sinStock = (v.stock ?? 0) <= 0;
         const btn = document.createElement("button");
-        btn.className   = "size-btn" + (sinStock ? " sin-stock" : "");
-        btn.dataset.id  = v.id;
+        btn.className     = "size-btn" + (sinStock ? " sin-stock" : "");
+        btn.dataset.id    = v.id;
         btn.dataset.stock = v.stock ?? 0;
-        btn.disabled    = sinStock;
-        btn.title       = sinStock ? "Sin stock" : `Stock: ${v.stock}`;
-        btn.textContent = v.talle;
+        btn.disabled      = sinStock;
+        btn.title         = sinStock ? "Sin stock" : `Stock: ${v.stock}`;
+        btn.textContent   = v.talle;
         btn.addEventListener("click", () => {
             document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("selected"));
             btn.classList.add("selected");
@@ -264,17 +286,10 @@ async function cargarProducto() {
         const backdrop = document.getElementById("size-guide-backdrop");
         const tbody    = document.getElementById("size-guide-body");
 
-        const openModal  = () => {
-            modal.hidden = false;
-            document.body.style.overflow = "hidden";
-        };
-        const closeModal = () => {
-            modal.hidden = true;
-            document.body.style.overflow = "";
-        };
+        const openModal  = () => { modal.hidden = false; document.body.style.overflow = "hidden"; };
+        const closeModal = () => { modal.hidden = true;  document.body.style.overflow = ""; };
 
         guideBtn?.addEventListener("click", async () => {
-            // solo consulta Supabase la primera vez
             if (!tbody.hasChildNodes()) {
                 const guide = await DB.getSizeGuide(producto.size_guide_id);
                 if (guide?.talles) {
@@ -287,8 +302,8 @@ async function cargarProducto() {
                 }
                 if (guide?.imagen_guia) {
                     const illustration = document.getElementById("size-guide-illustration");
-                    if (illustration) {illustration.innerHTML = `<img src="${guide.imagen_guia}" alt="Guía de talles ${producto.nombre}">`;
-                        
+                    if (illustration) {
+                        illustration.innerHTML = `<img src="${guide.imagen_guia}" alt="Guía de talles ${producto.nombre}">`;
                     }
                 }
             }
@@ -297,9 +312,7 @@ async function cargarProducto() {
 
         closeBtn?.addEventListener("click", closeModal);
         backdrop?.addEventListener("click", closeModal);
-        document.addEventListener("keydown", e => {
-            if (e.key === "Escape") closeModal();
-        });
+        document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
     }
 
     /* relacionados */
